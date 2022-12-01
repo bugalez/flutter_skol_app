@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 
@@ -17,23 +18,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  // bool isCheked = false;
   var isLoaded = false;
   late int id;
-  List listId = [];
-
+  // List listId = [];
+  List listId = GetStorage().read('lisid') ?? [];
   List<Post>? posts;
 
   @override
   void initState() {
+        print("homePage${listId}");
+    GetStorage().writeIfNull('listid', listId);
+    listId = GetStorage().read('listid');
     super.initState();
-
+    GetStorage().listenKey('lisid', (value) {
+      setState((){
+        listId = value;
+      });
+    });
     //fetch data from Api
     getData();
     listId;
-    // print("homePage${listId}");
-
-
   }
 
   // Récupère les datas de l'api
@@ -94,7 +98,8 @@ class _HomePageState extends State<HomePage> {
                   );
 
                   setState(() {
-                  });
+                    print("homePage${GetStorage().read('listid')}");
+                    GetStorage().write('lisid', GetStorage().read('listid'));});
                 },
               ),
             );
