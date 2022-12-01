@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.amber[500],
       appBar: AppBar(
-        title: const Text('Prestation 2022'),
+        title: const Text('Sorties Bagad 2022/2023'),
       ),
       body: Visibility(
         visible: isLoaded,
@@ -97,7 +97,6 @@ class _HomePageState extends State<HomePage> {
                   );
 
                   setState(() {
-                    print("homePage${GetStorage().read('listid')}");
                     GetStorage().write('lisid', GetStorage().read('listid'));});
                 },
               ),

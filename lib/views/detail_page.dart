@@ -109,7 +109,7 @@ class _DetailScreenState extends State<DetailScreen> {
         Container(
           margin: const EdgeInsets.only(left: 8.0),
           child: Text(
-            widget.posts.id,
+            widget.posts.nbrSonneurs,
             style: const TextStyle(
               color: Colors.blue,
             ),
