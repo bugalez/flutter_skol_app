@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 import '../models/post.dart';
@@ -17,26 +16,34 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   late int id = 0;
-  List isFavorite = [2, 5, 3];
+
+  List isFavorite = [];
+
 
   toggleIcons() {
     int id = int.parse(widget.posts.id);
     if (isFavorite.contains(id)) {
       return const Icon(
-        Icons.delete,
-        color: Colors.red,
+        Icons.star,
+        color: Colors.blue,
         size: 50,
+        semanticLabel: 'active',
       );
     } else {
-      return const Icon(Icons.check, color: Colors.blue, size: 50);
+      return const Icon(
+          Icons.star_outline,
+          color: Colors.white,
+          size: 50,
+          semanticLabel: 'inactive',
+      );
     }
   }
 
-  toggleFavorite(){
-    int id= int.parse(widget.posts.id);
-    if(isFavorite.contains(id)){
-        isFavorite.remove(id);
-    }else{
+  toggleFavorite() {
+    int id = int.parse(widget.posts.id);
+    if (isFavorite.contains(id)) {
+      isFavorite.remove(id);
+    } else {
       isFavorite.add(id);
     }
   }
@@ -45,7 +52,8 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
     //isFavorite; // Actualise la liste
-    isFavorite = widget.listId; // Récupère la list de la homePage -> l'injecte dans list isFavorite
+    isFavorite = widget
+        .listId; // Récupère la list de la homePage -> l'injecte dans list isFavorite
     toggleIcons; // Modifie l'icone
   }
 
@@ -78,7 +86,6 @@ class _DetailScreenState extends State<DetailScreen> {
         IconButton(
           onPressed: () {
             setState(() {
-              print("DétailPage${GetStorage().read('listid')}");
               isFavorite;
               toggleFavorite();
               toggleIcons();
@@ -149,7 +156,8 @@ class _DetailScreenState extends State<DetailScreen> {
         title: Text(widget.posts.sortie),
         leading: IconButton(
           // Icon arrow back AppBar
-          onPressed: () => {
+          onPressed: () =>
+          {
             setState(() {
               isFavorite;
             }),
@@ -165,9 +173,9 @@ class _DetailScreenState extends State<DetailScreen> {
             padding: const EdgeInsets.all(10),
             child: CachedNetworkImage(
               imageUrl:
-                  'https://bugalez.com/site/api/bagad/img/skolsonnerien128x128-trans.png',
+              'https://bugalez.com/site/api/bagad/img/skolsonnerien128x128-trans.png',
               placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
+              const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Icon(Icons.error),
               width: 300,
               height: 300,
@@ -182,12 +190,4 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  void test(data) {
-    print(data);
-  }
-} //class End
-
-// String correctlyFormattedDateTime(String date){
-//   var ParsedDate = DateTime.parse(date);
-//   return DateFormat('EEEE dd MMMM yyyy', 'fr').format(ParsedDate); //=> 02/07/2020
-// }
+}

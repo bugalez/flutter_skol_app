@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
 
   var isLoaded = false;
   late int id;
-  // List listId = [];
   List listId = GetStorage().read('lisid') ?? [];
   List<Post>? posts;
 
@@ -117,11 +116,4 @@ class _HomePageState extends State<HomePage> {
 
 }
 
-// String correctlyFormattedDateTime(String fr, String date){
-//   initializeDateFormatting(fr);
-//
-//
-//   var ParsedDate = DateTime.parse(date);
-//   return DateFormat('EEEE dd MMMM yyyy', fr).format(ParsedDate); //=> 02/07/2020
-// }
 
