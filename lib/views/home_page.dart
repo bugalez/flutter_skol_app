@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../models/post.dart';
 import '../services/remote_service.dart';
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-        print("homePage${listId}");
+    initializeDateFormatting();
     GetStorage().writeIfNull('listid', listId);
     listId = GetStorage().read('listid');
     super.initState();
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                 leading: networkImage,
                 title: Text(posts![index].sortie),
                 subtitle: Text(
-                    DateFormat('dd/MM/y').format(posts![index].date)
+                  DateFormat('EE dd MMM yy', 'fr').format(posts![index].date),
                 ),
                 trailing: listId.contains(indexAdd) ? const Icon(Icons.star, size: 30, color: Colors.amberAccent,) : null,
                 onTap: () async {
