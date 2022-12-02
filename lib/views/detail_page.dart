@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import '../models/post.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -78,7 +77,6 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
               Text(DateFormat('EEEE dd MMMM yyyy', 'fr_FR').format(widget.posts.date),
-                  // correctlyFormattedDateTime(posts.date.toString()),
                   style: TextStyle(color: Colors.blue[500], fontSize: 20)),
             ],
           ),
@@ -163,7 +161,7 @@ class _DetailScreenState extends State<DetailScreen> {
             }),
             Navigator.pop(context, isFavorite),
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: ListView(

@@ -22,9 +22,11 @@ class _HomePageState extends State<HomePage> {
   late int id;
   List listId = GetStorage().read('lisid') ?? [];
   List<Post>? posts;
+  String year = "Année";
 
   @override
   void initState() {
+
     initializeDateFormatting();
     GetStorage().writeIfNull('listid', listId);
     listId = GetStorage().read('listid');
@@ -66,10 +68,13 @@ class _HomePageState extends State<HomePage> {
   /* ----------------------------Scaffold -------------------*/
   @override
   Widget build(BuildContext context) {
+    var dt = DateTime.now().year +1;
+    print("Datime ${dt}");
+    year = posts![0].annee != dt ? "${posts![0].annee}/${dt}" : "${posts![0].annee}";
     return Scaffold(
       backgroundColor: Colors.amber[500],
       appBar: AppBar(
-        title: const Text('Sorties Bagad 2022/2023'),
+        title: Text('Sorties Bagad ${year}'),
       ),
       body: Visibility(
         visible: isLoaded,
@@ -97,7 +102,8 @@ class _HomePageState extends State<HomePage> {
                   );
 
                   setState(() {
-                    GetStorage().write('lisid', GetStorage().read('listid'));});
+                    GetStorage().write('lisid', GetStorage().read('listid'));
+                  });
                 },
               ),
             );

@@ -17,6 +17,7 @@ class Post {
     required this.heure,
     required this.lieu,
     required this.description,
+    required this.annee,
   });
 
   String id;
@@ -26,6 +27,7 @@ class Post {
   String heure;
   String lieu;
   String description;
+  String annee;
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
     id: json["id"],
@@ -35,6 +37,7 @@ class Post {
     heure: json["heure"],
     lieu: json["lieu"],
     description: json["description"],
+    annee: json["annee"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -45,5 +48,6 @@ class Post {
     "heure": heure,
     "lieu": lieu,
     "description": description,
+    "annee": annee,
   };
 }
