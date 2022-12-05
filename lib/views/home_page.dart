@@ -18,13 +18,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  // final getStore = GetStorage();
   var isLoaded = false;
   late int id;
   List listId = GetStorage().read('lisid') ?? [];
   List<Post>? posts;
-  String year = "Année";
+  String? year = "date";
+  int count = 0;
 
-  @override
+@override
   void initState() {
 
     initializeDateFormatting();
@@ -69,12 +71,48 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var dt = DateTime.now().year +1;
-    print("Datime ${dt}");
-    year = posts![0].annee != dt ? "${posts![0].annee}/${dt}" : "${posts![0].annee}";
+    year = dt.toString() ;
+    count = posts?.length ?? 0;
+    // print(count);
     return Scaffold(
       backgroundColor: Colors.amber[500],
       appBar: AppBar(
         title: Text('Sorties Bagad ${year}'),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (context){
+              return [
+            const     PopupMenuItem<int>(value: 0, child: Text('Tout sélectionner')),
+                const PopupMenuItem<int>(value: 1, child: Text('Tout désélectionner')),
+              ];
+            },
+            onSelected: (value){
+              switch(value){
+                case 0:
+                    listId = allFavorite(count);
+                  setState(() {
+                    // GetStorage().write('listid', GetStorage().read('listid'));
+                    GetStorage().write('listid', listId);
+                    print(GetStorage().read('listid'));
+                  });
+                  break;
+                case 1:
+                    listId = [];
+                    GetStorage().remove('listid');
+                    // GetStorage().write('listid', listId);
+                    print("désélectioné ${GetStorage().read('listid')}");
+                  setState((){
+                  });
+                  break;
+                default:
+                  print("Il n'y a rien ici!!!");
+                  break;
+              }
+            },
+
+          )
+        ],
       ),
       body: Visibility(
         visible: isLoaded,
@@ -90,6 +128,7 @@ class _HomePageState extends State<HomePage> {
               child: ListTile(
                 leading: networkImage,
                 title: Text(posts![index].sortie),
+                // title: allFavorite(posts?.length),
                 subtitle: Text(
                   DateFormat('EE dd MMM yy', 'fr').format(posts![index].date),
                 ),
@@ -111,12 +150,20 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-
   }
 
-  int indexAdd(int data) {
+  int indexAdd<int>(data) {
     late int intAdd = data -1;
     return intAdd;
+  }
+
+  allFavorite(data){
+    List favorite = [];
+    for (int i=1; i<=data; i++ ){
+      favorite.add(i);
+    }
+    // print("favorite ${favorite}");
+    return favorite;
   }
 
 }
